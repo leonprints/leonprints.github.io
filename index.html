@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leon — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0c10;
+      color: #c8d8e8;
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,180,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,180,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .scan-line {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,180,255,0.6), transparent);
+      animation: scan 4s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes scan {
+      0%   { top: 0;    opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { top: 100vh; opacity: 0; }
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(0,180,255,0.2);
+      border-left: 3px solid #00b4ff;
+      padding: 1.5rem;
+      background: rgba(0,180,255,0.04);
+    }
+
+    .hero-logo {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    .hero-text h1 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 26px;
+      font-weight: 400;
+      color: #00b4ff;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .hero-text .tag {
+      font-size: 12px;
+      color: rgba(0,180,255,0.55);
+      font-family: 'Share Tech Mono', monospace;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .hero-text p {
+      font-size: 16px;
+      color: #8faabf;
+      line-height: 1.6;
+    }
+
+    /* SECTION HEADER */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .section-header .label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: #00b4ff;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .section-header .line {
+      flex: 1;
+      height: 1px;
+      background: rgba(0,180,255,0.2);
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .skill-card {
+      background: rgba(0,180,255,0.05);
+      border: 1px solid rgba(0,180,255,0.15);
+      padding: 14px 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .skill-card:hover {
+      border-color: rgba(0,180,255,0.5);
+      background: rgba(0,180,255,0.1);
+    }
+
+    .skill-card .sk-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #c8d8e8;
+      margin-bottom: 4px;
+    }
+
+    .skill-card .sk-sub {
+      font-size: 12px;
+      color: rgba(0,180,255,0.55);
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* PROJECTS */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .proj-item {
+      border: 1px solid rgba(0,180,255,0.12);
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+
+    .proj-item:hover {
+      border-color: rgba(0,180,255,0.45);
+    }
+
+    .proj-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(0.85);
+      transition: filter 0.3s;
+    }
+
+    .proj-item:hover .proj-img {
+      filter: brightness(1) saturate(1.1);
+    }
+
+    .proj-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+    }
+
+    .proj-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: #00b4ff;
+      opacity: 0.45;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .proj-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #c8d8e8;
+      margin-bottom: 4px;
+    }
+
+    .proj-badge {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: #00b4ff;
+      border: 1px solid rgba(0,180,255,0.4);
+      padding: 2px 8px;
+      margin-bottom: 6px;
+      letter-spacing: 0.08em;
+    }
+
+    .proj-desc {
+      font-size: 14px;
+      color: #6a859c;
+      line-height: 1.55;
+    }
+
+    /* CONTACTS */
+    .contacts {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid rgba(0,180,255,0.35);
+      color: #00b4ff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .contact-btn:hover {
+      background: rgba(0,180,255,0.12);
+      border-color: rgba(0,180,255,0.75);
+    }
+
+    /* STATUS BAR */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0,180,255,0.1);
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #00b4ff;
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .status-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: rgba(0,180,255,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 500px) {
+      .hero { flex-direction: column; align-items: flex-start; }
+      .hero-logo { width: 60px; height: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid-bg"></div>
+  <div class="scan-line"></div>
+
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="hero">
+      <img class="hero-logo" src="Gemini_Generated_Image_roeu1kroeu1kroeu.png" alt="Leon logo" />
+      <div class="hero-text">
+        <h1>LEON</h1>
+        <div class="tag">// AGE: 18 &nbsp;|&nbsp; ROME, IT &nbsp;|&nbsp; ACTIVE</div>
+        <p>Inventor, maker, and engineer-in-training. I build what I imagine — from custom PCBs to full Iron Man armor. If it involves electronics, code, or 3D printing, I'm already working on it.</p>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section-header">
+      <span class="label">// capabilities</span>
+      <div class="line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="sk-title">3D Printing</div>
+        <div class="sk-sub">FDM · CAD design</div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-title">Electronics</div>
+        <div class="sk-sub">PCB · ESP32 · circuits</div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-title">Programming</div>
+        <div class="sk-sub">C++ · Python</div>
+      </div>
+      <div class="skill-card">
+        <div class="sk-title">PCB Design</div>
+        <div class="sk-sub">Custom boards · KiCad</div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="section-header">
+      <span class="label">// selected projects</span>
+      <div class="line"></div>
+    </div>
+
+    <div class="projects-list">
+
+      <div class="proj-item">
+        <img class="proj-img" src="WM.png" alt="War Machine suit" style="object-position: center 20%;" />
+        <div class="proj-body">
+          <span class="proj-num">01</span>
+          <div>
+            <div class="proj-title">War Machine</div>
+            <div class="proj-desc">Full 3D-printed War Machine suit with integrated lighting and motorized components. Complete wearable build.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-item">
+        <img class="proj-img" src="Blackpanther.png" alt="Black Panther helmet" style="object-position: center;" />
+        <div class="proj-body">
+          <span class="proj-num">02</span>
+          <div>
+            <div class="proj-title">Black Panther Helmet</div>
+            <div class="proj-desc">3D-printed helmet with surface detailing, tribal engravings, and painted finish. High-accuracy replica build.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-item">
+        <img class="proj-img" src="IMG_6628.JPG" alt="VANGUARD PCB" style="object-position: center;" />
+        <div class="proj-body">
+          <span class="proj-num">03</span>
+          <div>
+            <div class="proj-title">VANGUARD PCB</div>
+            <div class="proj-badge">Voltage Adaptive Neural Grid Unit for Armor Runtime Distribution</div>
+            <div class="proj-desc">Custom-designed PCB with servo, HUD display, and eye LED control. Designed from scratch for helmet electronics integration.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-item">
+        <div class="proj-body">
+          <span class="proj-num">04</span>
+          <div>
+            <div class="proj-title">Iron Man Mk VII <span style="font-size:12px; color:#00b4ff; font-family:'Share Tech Mono',monospace;">[IN PROGRESS]</span></div>
+            <div class="proj-desc">Motorized arm with hand-mounted laser and forearm missile, ESP32 C3 controlled. Repulsor powered by CodeCell with gyroscope tracking. Classic red/gold color scheme.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CONTACT -->
+    <div class="section-header">
+      <span class="label">// contact</span>
+      <div class="line"></div>
+    </div>
+
+    <div class="contacts">
+      <a class="contact-btn" href="https://instagram.com/leon_prints_stuff" target="_blank">IG @leon_prints_stuff</a>
+      <a class="contact-btn" href="mailto:leonprinting.qna@gmail.com">EMAIL</a>
+    </div>
+
+    <!-- STATUS -->
+    <div class="status-bar">
+      <div class="dot"></div>
+      <span class="status-text">SYSTEMS ONLINE &nbsp;·&nbsp; READY FOR COLLABORATION</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
