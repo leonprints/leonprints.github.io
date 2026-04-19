@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leon — Portfolio</title>
+  <title>Leon Prints</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
@@ -278,6 +278,53 @@
       letter-spacing: 0.1em;
     }
 
+    /* ANIMATIONS */
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .skill-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.2s, background 0.2s;
+    }
+
+    .skill-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 500px) {
       .hero { flex-direction: column; align-items: flex-start; }
@@ -297,13 +344,13 @@
       <img class="hero-logo" src="Gemini_Generated_Image_roeu1kroeu1kroeu.png" alt="Leon logo" />
       <div class="hero-text">
         <h1>LEON</h1>
-        <div class="tag">// AGE: 18 &nbsp;|&nbsp; ROME, IT &nbsp;|&nbsp; ACTIVE</div>
+        <div class="tag">// AGE: 16 &nbsp;|&nbsp; ROME, IT &nbsp;|&nbsp; ACTIVE</div>
         <p>Inventor, maker, and engineer-in-training. I build what I imagine — from custom PCBs to full Iron Man armor. If it involves electronics, code, or 3D printing, I'm already working on it.</p>
       </div>
     </div>
 
     <!-- SKILLS -->
-    <div class="section-header">
+    <div class="section-header reveal-left">
       <span class="label">// capabilities</span>
       <div class="line"></div>
     </div>
@@ -328,14 +375,14 @@
     </div>
 
     <!-- PROJECTS -->
-    <div class="section-header">
+    <div class="section-header reveal-left">
       <span class="label">// selected projects</span>
       <div class="line"></div>
     </div>
 
     <div class="projects-list">
 
-      <div class="proj-item">
+      <div class="proj-item reveal">
         <img class="proj-img" src="WM.png" alt="War Machine suit" />
         <div class="proj-body">
           <span class="proj-num">01</span>
@@ -346,7 +393,7 @@
         </div>
       </div>
 
-      <div class="proj-item">
+      <div class="proj-item reveal">
         <img class="proj-img" src="Blackpanther.png" alt="Black Panther helmet" />
         <div class="proj-body">
           <span class="proj-num">02</span>
@@ -357,7 +404,7 @@
         </div>
       </div>
 
-      <div class="proj-item">
+      <div class="proj-item reveal">
         <img class="proj-img" src="IMG_6628.JPG" alt="VANGUARD PCB" />
         <div class="proj-body">
           <span class="proj-num">03</span>
@@ -369,7 +416,7 @@
         </div>
       </div>
 
-      <div class="proj-item">
+      <div class="proj-item reveal">
         <div class="proj-body">
           <span class="proj-num">04</span>
           <div>
@@ -382,23 +429,48 @@
     </div>
 
     <!-- CONTACT -->
-    <div class="section-header">
+    <div class="section-header reveal-left">
       <span class="label">// contact</span>
       <div class="line"></div>
     </div>
 
-    <div class="contacts">
+    <div class="contacts reveal">
       <a class="contact-btn" href="https://instagram.com/leon_prints_stuff" target="_blank">IG @leon_prints_stuff</a>
       <a class="contact-btn" href="mailto:leonprinting.qna@gmail.com">EMAIL</a>
     </div>
 
     <!-- STATUS -->
-    <div class="status-bar">
+    <div class="status-bar reveal">
       <div class="dot"></div>
       <span class="status-text">SYSTEMS ONLINE &nbsp;·&nbsp; READY FOR COLLABORATION</span>
     </div>
 
   </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left').forEach(el => observer.observe(el));
+
+    const cards = document.querySelectorAll('.skill-card');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(cards).indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('visible'), idx * 100);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+    cards.forEach(card => cardObserver.observe(card));
+  </script>
 
 </body>
 </html>
